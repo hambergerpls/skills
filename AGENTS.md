@@ -2,7 +2,7 @@
 
 ## Repository Overview
 
-This is a **skills collection repository** -- a knowledge base of structured reference material designed for AI coding agents. It is **not** a traditional software application. Each "skill" is a self-contained package of documentation, API references, and runnable example templates for a specific library or tool.
+This is a **skills collection repository** -- a knowledge base of structured reference material designed for AI coding agents. It is **not** a traditional software application. Each "skill" is a self-contained package of documentation, API references, and runnable example scripts for a specific library or tool.
 
 ### Directory Structure
 
@@ -12,8 +12,11 @@ skills/
     SKILL.md              # Skill manifest and primary documentation
     references/           # Detailed API reference docs (Markdown)
       <topic>.md
-    templates/            # Runnable example scripts
-      <example-name>.py
+    scripts/              # Executable utility scripts
+      <script-name>.py
+    assets/               # Templates, resources
+      templates/          # Illustrative example scripts (copy-and-modify)
+        <example-name>.py
 devenv.nix                # Nix-based dev environment config
 devenv.yaml               # Nix input sources
 devenv.lock               # Pinned Nix inputs
@@ -36,8 +39,8 @@ pip install <package>
 
 **There are no build, lint, test, or format commands.** This repository contains only documentation and example scripts. There is no CI/CD pipeline, no test framework, and no linter configuration.
 
-- Python files under `templates/` are **illustrative examples**, not application code or tests.
-- Do not attempt to run templates without user-provided credentials (e.g., `token_v2`).
+- Python files under `scripts/` are **illustrative examples**, not application code or tests.
+- Do not attempt to run scripts without user-provided credentials (e.g., `token_v2`).
 - There is no `package.json`, `Makefile`, `pyproject.toml`, or equivalent build config.
 
 ## Skill Authoring Guide
@@ -47,7 +50,8 @@ pip install <package>
 1. Create a directory: `skills/<skill-name>/`
 2. Add `SKILL.md` with YAML frontmatter and comprehensive documentation
 3. Add `references/` with detailed API reference Markdown files
-4. Add `templates/` with runnable example scripts
+4. Add `scripts/` with executable utility scripts
+5. Add `assets/templates/` with illustrative example scripts (copy-and-modify)
 
 ### SKILL.md Format
 
@@ -74,7 +78,8 @@ After frontmatter, the document follows this structure:
 5. **Code examples** -- grouped by topic with H3 headings
 6. **Important Notes & Gotchas** -- bullet list of pitfalls and edge cases
 7. **Deep-dive Documentation** -- table linking to `references/*.md`
-8. **Templates** -- table linking to `templates/*.py` with descriptions
+8. **Scripts** -- table linking to `scripts/*.py` with descriptions
+9. **Templates** -- table linking to `assets/templates/*.py` with descriptions
 
 ### References Directory
 
@@ -86,9 +91,9 @@ Each file in `references/` covers one API surface area (e.g., `client.md`, `bloc
 - **Parameters documented inline** as code comments
 - **Return types and behaviors** described in prose after code blocks
 
-### Templates Directory
+### Scripts Directory
 
-Each template is a self-contained, runnable script demonstrating a specific workflow. See the Python style conventions below.
+Each script is a self-contained, runnable example demonstrating a specific workflow. See the Python style conventions below.
 
 ## Code Style Guidelines
 
@@ -102,9 +107,9 @@ Each template is a self-contained, runnable script demonstrating a specific work
 - One blank line between all block-level elements (headings, paragraphs, code blocks, lists, tables).
 - No trailing whitespace. Files end with a single newline.
 
-### Python Templates
+### Python Scripts
 
-**Module docstring** -- every template starts with a triple-quoted docstring:
+**Module docstring** -- every script starts with a triple-quoted docstring:
 
 ```python
 """
@@ -153,12 +158,12 @@ The existing codebase uses Unicode box-drawing (`──`). Either form is accept
 - Use **f-strings** for string interpolation, not `.format()` or `%`.
 - Use `getattr(obj, 'attr', default)` for safe attribute access.
 - Inline comments for non-obvious operations.
-- No type annotations in templates -- keep examples simple and approachable.
+- No type annotations in scripts -- keep examples simple and approachable.
 - Two blank lines before each section comment block.
 - Prefer explicit over implicit: show each step rather than chaining.
 
 **Error handling:**
-- Templates are demonstrative; they do not need try/except blocks.
+- Scripts are demonstrative; they do not need try/except blocks.
 - Note dangerous operations with comments (e.g., `# Hard-delete (permanent)`).
 - Clearly mark placeholders that users must replace: `<YOUR_TOKEN_V2>`, `<YOUR_PAGE_URL>`.
 
@@ -169,7 +174,7 @@ The existing codebase uses Unicode box-drawing (`──`). Either form is accept
 - **Final newline:** All files end with exactly one newline.
 - **No secrets:** Never commit real tokens, passwords, or API keys. Use placeholder strings.
 - **Skill naming:** Lowercase, hyphenated (e.g., `notion-py`, `aws-s3-client`).
-- **File naming:** Lowercase, hyphenated for Markdown (e.g., `client.md`). Lowercase, hyphenated for Python templates (e.g., `basic-page-operations.py`).
+- **File naming:** Lowercase, hyphenated for Markdown (e.g., `client.md`). Lowercase, hyphenated for Python scripts (e.g., `basic-page-operations.py`).
 
 ## Agent Instructions
 

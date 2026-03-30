@@ -8,10 +8,13 @@ Demonstrates:
 - Adding, moving, and deleting blocks
 
 Usage:
-    1. Replace <YOUR_TOKEN_V2> with your token_v2 cookie value
+    1. Run extract-token.py first to save your token_v2
     2. Replace <YOUR_PAGE_URL> with the URL of a Notion page you want to work with
     3. Run: python basic-page-operations.py
 """
+
+import os
+from pathlib import Path
 
 from notion.client import NotionClient
 from notion.block import (
@@ -26,9 +29,17 @@ from notion.block import (
     PageBlock,
 )
 
-# ── Connect to Notion ─────────────────────────────────────────────────────────
+# ── Load token & connect to Notion ────────────────────────────────────────────
 
-TOKEN = "<YOUR_TOKEN_V2>"
+TOKEN_FILE = Path(os.environ.get("NOTION_DATA_DIR", Path.home() / ".notion-py")) / "token"
+
+if not TOKEN_FILE.exists():
+    raise FileNotFoundError(
+        f"No saved token found at {TOKEN_FILE}. "
+        "Run extract-token.py first to log in and save your token_v2."
+    )
+
+TOKEN = TOKEN_FILE.read_text().strip()
 PAGE_URL = "<YOUR_PAGE_URL>"
 
 client = NotionClient(token_v2=TOKEN)

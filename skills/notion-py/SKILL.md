@@ -23,6 +23,17 @@ pip install notion
 
 ### Obtain `token_v2`
 
+**Automated (recommended):** Run the [extract-token.py](scripts/extract-token.py) script to log in via a browser and save the token automatically:
+
+```bash
+pip install playwright && playwright install chromium
+python extract-token.py
+```
+
+The token is saved to `~/.notion-py/token` (or `$NOTION_DATA_DIR/token`) with restrictive file permissions.
+
+**Manual:** If you prefer to extract the token yourself:
+
 1. Log in to [notion.so](https://www.notion.so) in your browser (must be a full member, not a guest)
 2. Open browser DevTools (F12) > Application > Cookies > `www.notion.so`
 3. Copy the value of the `token_v2` cookie
@@ -257,10 +268,16 @@ client.set_user_by_uid("<uid>")
 | [references/collections.md](references/collections.md) | Databases, rows, views, queries, filters, sorts, aggregations, property types |
 | [references/utilities.md](references/utilities.md) | Markdown conversion, RecordStore, Monitor, utility functions, settings |
 
+## Scripts
+
+| Script | Description |
+|--------|-------------|
+| [scripts/extract-token.py](scripts/extract-token.py) | Launch a browser to log in to Notion and automatically extract/save the `token_v2` cookie |
+
 ## Templates
 
 | Template | Description |
 |----------|-------------|
-| [templates/basic-page-operations.py](templates/basic-page-operations.py) | Connect to Notion, read/write pages, navigate block tree, add/move/delete blocks |
-| [templates/database-operations.py](templates/database-operations.py) | Query databases, add rows, filter, sort, aggregate, work with property types |
-| [templates/content-builder.py](templates/content-builder.py) | Build structured pages with headers, text, code, embeds, file uploads, callouts |
+| [assets/templates/basic-page-operations.py](assets/templates/basic-page-operations.py) | Connect to Notion, read/write pages, navigate block tree, add/move/delete blocks |
+| [assets/templates/database-operations.py](assets/templates/database-operations.py) | Query databases, add rows, filter, sort, aggregate, work with property types |
+| [assets/templates/content-builder.py](assets/templates/content-builder.py) | Build structured pages with headers, text, code, embeds, file uploads, callouts |
